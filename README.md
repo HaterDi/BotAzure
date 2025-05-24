@@ -1,2 +1,2 @@
-# OpenAI Account Bot
-This bot handles user registration and general questions.
+# OpenAI-AccountBot
+Simple bot to collect user registration data.
