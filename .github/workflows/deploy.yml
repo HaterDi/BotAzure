@@ -10,23 +10,15 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v3
+      - uses: actions/checkout@v3
 
-    - name: Set up Python
-      uses: actions/setup-python@v5
-      with:
-        python-version: '3.10'
+      - name: Вход в Azure
+        uses: azure/login@v1
+        with:
+          creds: '{"clientId":"d7be29d0-6e34-4281-8eb5-24d4a859ed19","clientSecret":"kHO8Q~pxV.JO44XqjkFTWJJ1V76s7uex4A7UFcwX","tenantId":"6580ee3b-888b-415d-9e29-2154efbc6098","subscriptionId":"ВАШ_ID_ПОДПИСКИ"}'
 
-    - name: Install dependencies
-      run: |
-        python -m pip install --upgrade pip
-        pip install -r requirements.txt
-
-    - name: Deploy to Azure Web App
-      uses: azure/webapps-deploy@v2
-      with:
-        app-name: openai-bot-app-001
-        slot-name: 'production'
-        publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
-        package: .
+      - name: Деплой в Azure Web App
+        uses: azure/webapps-deploy@v2
+        with:
+          app-name: openai-bot-app-001
+          package: .
