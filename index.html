@@ -1,34 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
   <meta charset="UTF-8" />
-  <title>Azure Speech Bot</title>
+  <title>Azure Bot</title>
 </head>
 <body>
-  <h2>🎙 Azure Speech Bot</h2>
-  <button onclick="start()">Start Talking</button>
-  <p id="status">Press the button to talk...</p>
-
-  <script src="https://cdn.botframework.com/botframework-webchat/latest/webchat.js"></script>
-  <script>
-    const DIRECT_LINE_TOKEN = 'CPdoNcBdee0zA1B1l5BvT2tBtQQpUrzfqSashfQfu8vo4lekDivJJQQJ99BEAC5RqLJXJ3w3AAAYACOGsVxP
-';
-
-    const styleOptions = {
-      botAvatarInitials: 'Bot',
-      userAvatarInitials: 'You'
-    };
-
-    async function start() {
-      document.getElementById('status').textContent = 'Connecting...';
-
-      window.WebChat.renderWebChat({
-        directLine: window.WebChat.createDirectLine({ secret: DIRECT_LINE_TOKEN }),
-        styleOptions
-      }, document.body);
-
-      document.getElementById('status').textContent = 'Connected! Speak to the bot.';
-    }
-  </script>
+  <h1>🎉 Бот успешно развернут на Azure!</h1>
+  <p>Если ты видишь эту страницу — значит всё работает.</p>
 </body>
 </html>
