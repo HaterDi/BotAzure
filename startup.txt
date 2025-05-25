@@ -1,1 +1,1 @@
-python -m bot.main
+pm2 serve ./ 8080 --spa
