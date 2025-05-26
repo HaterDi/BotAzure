@@ -1,11 +1,54 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>Azure Bot</title>
+  <meta charset="UTF-8">
+  <title>🧠 Azure Voice Bot</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 30px; }
+    h1 { font-size: 28px; }
+    #webchat { height: 500px; width: 100%; margin-top: 20px; }
+  </style>
+  <script src="https://cdn.botframework.com/botframework-webchat/latest/webchat.js"></script>
 </head>
 <body>
-  <h1>🎉 Бот успешно развернут на Azure!</h1>
-  <p>Если ты видишь эту страницу — значит всё работает.</p>
+  <h1>🧠 Azure Voice Bot</h1>
+
+  <label for="language">Choose a language:</label>
+  <select id="language">
+    <option value="en-US">English</option>
+    <option value="ru-RU">Russian</option>
+    <option value="de-DE">German</option>
+    <option value="fr-FR">French</option>
+    <option value="es-ES">Spanish</option>
+    <option value="it-IT">Italian</option>
+    <option value="zh-CN">Chinese (Mandarin)</option>
+    <option value="ja-JP">Japanese</option>
+    <option value="ko-KR">Korean</option>
+  </select>
+
+  <div id="webchat" role="main"></div>
+
+  <script>
+    const token = "YNaGtT09Dr7rKCGokVLz6MPpSwTfZSjrRCS6vEZsfP7mJQDl0UQwJQQJ99BEACYeBjFAArohAAABAZBSVgEW.6Per04LncoLY0jTmSGCVNcUfIUJ1jdOpaoFYdI4u6SCUrAh8475fJQQJ99BEACYeBjFAArohAAABAZBS40nV";
+
+    const styleOptions = {
+      botAvatarInitials: 'Bot',
+      userAvatarInitials: 'You',
+      hideUploadButton: false,
+    };
+
+    const selectedLanguage = document.getElementById("language").value;
+
+    window.WebChat.renderWebChat({
+      directLine: window.WebChat.createDirectLine({ token }),
+      locale: selectedLanguage,
+      styleOptions
+    }, document.getElementById('webchat'));
+
+    document.getElementById("language").addEventListener("change", function () {
+      const newLang = this.value;
+      location.href = `${location.pathname}?lang=${newLang}`;
+    });
+  </script>
 </body>
 </html>
