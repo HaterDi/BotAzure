@@ -41,7 +41,7 @@ async def messages(req: web.Request) -> web.Response:
 
 # Запуск веб-сервера
 app = web.Application()
-app.router.add_post("/api/messages", messages)
+app.router.add_post("/api/messages", bot_adapter.process_activity)
 
 if __name__ == "__main__":
     try:
