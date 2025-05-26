@@ -1,7 +1,8 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>🧠 Azure Voice Bot</title>
   <style>
     body { font-family: Arial, sans-serif; padding: 30px; }
@@ -11,54 +12,28 @@
   <script src="https://cdn.botframework.com/botframework-webchat/latest/webchat.js"></script>
 </head>
 <body>
-  <h1>🧠 Azure Voice Bot</h1>
-
-  <label for="language">Choose a language:</label>
-  <select id="language">
-    <option value="en-US">English</option>
-    <option value="ru-RU">Russian</option>
-    <option value="de-DE">German</option>
-    <option value="fr-FR">French</option>
-    <option value="es-ES">Spanish</option>
-    <option value="it-IT">Italian</option>
-    <option value="zh-CN">Chinese (Mandarin)</option>
-    <option value="ja-JP">Japanese</option>
-    <option value="ko-KR">Korean</option>
-  </select>
-
+  <h1>👋 Голосовой бот регистрации</h1>
   <div id="webchat" role="main"></div>
-
   <script>
-    const directLine = window.WebChat.createDirectLine({
-      domain: 'http://localhost:3978/api/messages' // локальный бот
-    });
+    const directLineToken = "YNaGtT09Dr7rKCGokVLz6MPpSwTfZSjrRCS6vEZsfP7mJQDl0UQwJQQJ99BEACYeBjFAArohAAABAZBSVgEW.6Per04LncoLY0jTmSGCVNcUfIUJ1jdOpaoFYdI4u6SCUrAh8475fJQQJ99BEACYeBjFAArohAAABAZBS40nV";
+    const speechKey = "CPdoNcBdee0zA1B1l5BvT2tBtQQpUrzfqSashfQfu8vo4lekDivJJQQJ99BEAC5RqLJXJ3w3AAAYACOGsVxP";
+    const speechRegion = "westeurope";
 
-    const synth = window.speechSynthesis;
-    const selectedLanguage = document.getElementById("language").value;
+    (async function () {
+      const speechServicesPonyfillFactory = await window.WebChat.createCognitiveServicesSpeechServicesPonyfillFactory({
+        credentials: {
+          region: speechRegion,
+          subscriptionKey: speechKey
+        }
+      });
 
-    const renderBot = (locale) => {
       window.WebChat.renderWebChat({
-        directLine,
-        locale,
-        styleOptions: {
-          botAvatarInitials: 'Bot',
-          userAvatarInitials: 'You',
-          hideUploadButton: false,
-        },
-        webSpeechPonyfillFactory: window.WebChat.createBrowserWebSpeechPonyfillFactory({
-          speechSynthesisUtterance: window.SpeechSynthesisUtterance,
-          speechRecognition: window.SpeechRecognition || window.webkitSpeechRecognition
-        })
+        directLine: window.WebChat.createDirectLine({ token: directLineToken }),
+        webSpeechPonyfillFactory: speechServicesPonyfillFactory,
+        userID: 'user_' + Date.now(),
+        locale: 'en-US'
       }, document.getElementById('webchat'));
-    }
-
-    renderBot(selectedLanguage);
-
-    document.getElementById("language").addEventListener("change", function () {
-      const newLang = this.value;
-      document.getElementById('webchat').innerHTML = '';
-      renderBot(newLang);
-    });
+    })();
   </script>
 </body>
 </html>
