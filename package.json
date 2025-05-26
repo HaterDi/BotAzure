@@ -1,0 +1,12 @@
+{
+  "name": "azure-voice-bot",
+  "version": "1.0.0",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "dependencies": {
+    "botbuilder": "^4.19.1",
+    "restify": "^11.1.0"
+  }
+}
