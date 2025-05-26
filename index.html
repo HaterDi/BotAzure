@@ -40,7 +40,8 @@
     const selectedLanguage = document.getElementById("language").value;
 
     window.WebChat.renderWebChat({
-      directLine: window.WebChat.createDirectLine({ token }),
+    directLine: window.WebChat.createDirectLine({ domain: 'http://localhost:3978/api/messages' })
+
       locale: selectedLanguage,
       styleOptions
     }, document.getElementById('webchat'));
