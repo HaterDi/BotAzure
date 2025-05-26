@@ -29,26 +29,35 @@
   <div id="webchat" role="main"></div>
 
   <script>
-    const token = "YNaGtT09Dr7rKCGokVLz6MPpSwTfZSjrRCS6vEZsfP7mJQDl0UQwJQQJ99BEACYeBjFAArohAAABAZBSVgEW.6Per04LncoLY0jTmSGCVNcUfIUJ1jdOpaoFYdI4u6SCUrAh8475fJQQJ99BEACYeBjFAArohAAABAZBS40nV";
+    const directLine = window.WebChat.createDirectLine({
+      domain: 'http://localhost:3978/api/messages' // локальный бот
+    });
 
-    const styleOptions = {
-      botAvatarInitials: 'Bot',
-      userAvatarInitials: 'You',
-      hideUploadButton: false,
-    };
-
+    const synth = window.speechSynthesis;
     const selectedLanguage = document.getElementById("language").value;
 
-    window.WebChat.renderWebChat({
-    directLine: window.WebChat.createDirectLine({ domain: 'http://localhost:3978/api/messages' })
+    const renderBot = (locale) => {
+      window.WebChat.renderWebChat({
+        directLine,
+        locale,
+        styleOptions: {
+          botAvatarInitials: 'Bot',
+          userAvatarInitials: 'You',
+          hideUploadButton: false,
+        },
+        webSpeechPonyfillFactory: window.WebChat.createBrowserWebSpeechPonyfillFactory({
+          speechSynthesisUtterance: window.SpeechSynthesisUtterance,
+          speechRecognition: window.SpeechRecognition || window.webkitSpeechRecognition
+        })
+      }, document.getElementById('webchat'));
+    }
 
-      locale: selectedLanguage,
-      styleOptions
-    }, document.getElementById('webchat'));
+    renderBot(selectedLanguage);
 
     document.getElementById("language").addEventListener("change", function () {
       const newLang = this.value;
-      location.href = `${location.pathname}?lang=${newLang}`;
+      document.getElementById('webchat').innerHTML = '';
+      renderBot(newLang);
     });
   </script>
 </body>
