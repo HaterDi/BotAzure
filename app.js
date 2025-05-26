@@ -11,8 +11,9 @@ server.listen(process.env.port || process.env.PORT || 3978, function () {
   console.log(`\n[Bot] Слушает на ${server.url}`);
 });
 
-server.post('/api/messages', (req, res) => {
-  adapter.processActivity(req, res, async (context) => {
-    await context.sendActivity(`Вы сказали: ${context.activity.text}`);
+server.post('/api/messages', async (req, res) => {
+  await adapter.processActivity(req, res, async (context) => {
+    await bot.run(context);
   });
 });
+
